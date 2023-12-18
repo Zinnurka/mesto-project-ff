@@ -16,9 +16,9 @@ for (let i = 0; i < initialCards.length; i++) {
 
 // @todo: Функция удаления карточки
 
-const deleteButton = document.querySelectorAll(".card__delete-button");
+const deleteButtons = document.querySelectorAll(".card__delete-button");
 
-deleteButton.forEach(function (item) {
+deleteButtons.forEach(function (item) {
   item.addEventListener("click", function (event) {
     event.target.parentElement.remove();
   });
