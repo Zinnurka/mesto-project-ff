@@ -21,6 +21,6 @@ const deleteButtons = document.querySelectorAll(".card__delete-button");
 
 deleteButtons.forEach(function (item) {
   item.addEventListener("click", function (event) {
-    event.target.parentElement.remove();
+    event.target.closest('.card').remove();
   });
 });
