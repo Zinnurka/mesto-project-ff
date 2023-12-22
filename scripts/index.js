@@ -11,6 +11,7 @@ for (let i = 0; i < initialCards.length; i++) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   cardElement.querySelector(".card__image").src = initialCards[i].link;
   cardElement.querySelector(".card__title").textContent = initialCards[i].name;
+  cardElement.querySelector(".card__image").alt = initialCards[i].name;
   cardsContainer.append(cardElement);
 }
 
