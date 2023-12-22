@@ -19,8 +19,12 @@ for (let i = 0; i < initialCards.length; i++) {
 
 const deleteButtons = document.querySelectorAll(".card__delete-button");
 
+function deleteCard(card) {
+  card.remove();
+}
+
 deleteButtons.forEach(function (item) {
   item.addEventListener("click", function (event) {
-    event.target.closest('.card').remove();
+    deleteCard(event.target.closest('.card'))
   });
 });
