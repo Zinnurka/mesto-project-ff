@@ -1,3 +1,5 @@
+import './pages/index.css';
+
 const cardTemplate = document.querySelector("#card-template").content;
 
 const cardsContainer = document.querySelector(".places__list");
