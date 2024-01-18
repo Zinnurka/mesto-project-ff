@@ -3,8 +3,10 @@ import {initialCards} from './components/cards.js'
 
 
 const cardTemplate = document.querySelector("#card-template").content;
-
 const cardsContainer = document.querySelector(".places__list");
+const addCardBottom = document.querySelector('.profile__add-button');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupCloseButton = document.querySelector('.popup__close')
 
 function createCard(cardData, deleteCard) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -26,3 +28,19 @@ initialCards.forEach(function (cardData) {
   const card = createCard(cardData, deleteCard);
   cardsContainer.append(card);
 });
+
+function openPopup(popupName){
+  popupName.classList.add('popup_is-opened');
+}
+
+function closePopup(popupName) {
+  popupName.classList.remove('popup_is-opened');
+}
+
+addCardBottom.addEventListener('click', () => {
+  openPopup(popupEdit)
+})
+
+popupCloseButton.addEventListener('click', ()=> {
+  closePopup(popupEdit)
+})
