@@ -1,5 +1,6 @@
 import './pages/index.css';
 import {initialCards} from './components/cards.js'
+import {openPopup, closePopup} from './components/modal.js'
 
 
 const cardTemplate = document.querySelector("#card-template").content;
@@ -28,14 +29,6 @@ initialCards.forEach(function (cardData) {
   const card = createCard(cardData, deleteCard);
   cardsContainer.append(card);
 });
-
-function openPopup(popupName){
-  popupName.classList.add('popup_is-opened');
-}
-
-function closePopup(popupName) {
-  popupName.classList.remove('popup_is-opened');
-}
 
 addCardBottom.addEventListener('click', () => {
   openPopup(popupEdit)
