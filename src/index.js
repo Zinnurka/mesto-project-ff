@@ -51,4 +51,3 @@ addNewCardButton.addEventListener('click', () => {
 popupCloseButton[1].addEventListener('click', () => {  
   closePopup(popupCreateNewCard)
 })
-
