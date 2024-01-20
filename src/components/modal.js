@@ -1,6 +1,7 @@
 export function openPopup(popupName){
   popupName.classList.add('popup_is-opened');
   document.addEventListener('keydown', escapeClose);
+  document.addEventListener('click', overlayClose)
 }
 
 export function closePopup(popupName) {
@@ -8,7 +9,12 @@ export function closePopup(popupName) {
 }
 
 function escapeClose(e) {
+  const popupIsOpened = document.querySelector('.popup_is-opened')
   if (e.key === 'Escape') {
-    closePopup(document.querySelector('.popup_is-opened'))
+    closePopup(popupIsOpened)
   }
+}
+
+function overlayClose(e) {
+    e.target.classList.remove('popup_is-opened')
 }
