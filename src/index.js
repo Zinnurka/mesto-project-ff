@@ -5,9 +5,15 @@ import {openPopup, closePopup} from './components/modal.js'
 
 const cardTemplate = document.querySelector("#card-template").content;
 const cardsContainer = document.querySelector(".places__list");
-const addCardBottom = document.querySelector('.profile__add-button');
-const popupEdit = document.querySelector('.popup_type_edit');
-const popupCloseButton = document.querySelector('.popup__close')
+
+const profileEditButton = document.querySelector('.profile__edit-button');
+const addNewCardButton = document.querySelector('.profile__add-button');
+const popupCloseButton = document.querySelectorAll('.popup__close');
+
+
+const popupEditProfile = document.querySelector('.popup_type_edit');
+const popupCreateNewCard = document.querySelector('.popup_type_new-card');
+
 
 function createCard(cardData, deleteCard) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -30,10 +36,19 @@ initialCards.forEach(function (cardData) {
   cardsContainer.append(card);
 });
 
-addCardBottom.addEventListener('click', () => {
-  openPopup(popupEdit)
+profileEditButton.addEventListener('click', () => {
+  openPopup(popupEditProfile)
 })
 
-popupCloseButton.addEventListener('click', ()=> {
-  closePopup(popupEdit)
+popupCloseButton[0].addEventListener('click', () => {
+  closePopup(popupEditProfile)
 })
+
+addNewCardButton.addEventListener('click', () => {
+  openPopup(popupCreateNewCard)
+})
+
+popupCloseButton[1].addEventListener('click', () => {  
+  closePopup(popupCreateNewCard)
+})
+
