@@ -16,6 +16,7 @@ const popupEditProfile = document.querySelector('.popup_type_edit');
 const popupCreateNewCard = document.querySelector('.popup_type_new-card');
 
 const editProfileForm =  getFormByName("edit-profile")
+const addNewCardForm = getFormByName("new-place")
 
 initialCards.forEach(function (cardData) {
   const card = createCard(cardData, deleteCard);
@@ -46,3 +47,12 @@ editProfileForm.addEventListener('submit', (e) => {
   profileDescription.textContent = description;
 })
 
+addNewCardForm.addEventListener('click', (e) => {
+  e.preventDefault();
+  const placeName = addNewCardForm.elements['place-name'].value
+  const link = addNewCardForm.elements['link'].value
+  const cardData = {name: placeName, link: link }
+  cardsContainer.prepend(createCard(cardData, deleteCard))
+  closePopup(popupCreateNewCard)
+  addNewCardForm.reset()
+})
