@@ -18,3 +18,7 @@ function escapeClose(e) {
 function overlayClose(e) {
     e.target.classList.remove('popup_is-opened')
 }
+
+export function getFormByName(name){
+  return document.forms[name]
+}
