@@ -25,6 +25,8 @@ initialCards.forEach(function (cardData) {
 });
 
 profileEditButton.addEventListener('click', () => {
+  editProfileForm.elements.name.value = profileTitle.textContent
+  editProfileForm.elements.description.value = profileDescription.textContent
   openModal(modalEditProfile)
 })
 
