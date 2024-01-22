@@ -10,7 +10,7 @@ const profileDescription = document.querySelector('.profile__description');
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const addNewCardButton = document.querySelector('.profile__add-button');
-const modalCloseButton = document.querySelectorAll('.popup__close');
+const modalCloseButtons = document.querySelectorAll('.popup__close');
 
 const modalEditProfile = document.querySelector('.popup_type_edit');
 const modalCreateNewCard = document.querySelector('.popup_type_new-card');
@@ -28,7 +28,7 @@ profileEditButton.addEventListener('click', () => {
   openModal(modalEditProfile)
 })
 
-modalCloseButton[0].addEventListener('click', () => {
+modalCloseButtons[0].addEventListener('click', () => {
   closeModal(modalEditProfile)
 })
 
@@ -36,11 +36,11 @@ addNewCardButton.addEventListener('click', () => {
   openModal(modalCreateNewCard)
 })
 
-modalCloseButton[1].addEventListener('click', () => {  
+modalCloseButtons[1].addEventListener('click', () => {  
   closeModal(modalCreateNewCard)
 })
 
-modalCloseButton[2].addEventListener('click', () => {  
+modalCloseButtons[2].addEventListener('click', () => {  
   closeModal(modalImagePreview)
 })
 
