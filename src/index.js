@@ -1,6 +1,6 @@
 import './pages/index.css';
 import {initialCards} from './components/cards.js';
-import {openModal, closeModal, getFormByName, previewImage} from './components/modal.js';
+import {openModal, closeModal, getFormByName} from './components/modal.js';
 import {createCard, deleteCard, likeCard} from './components/card.js';
 
 
@@ -10,11 +10,11 @@ const profileDescription = document.querySelector('.profile__description');
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const addNewCardButton = document.querySelector('.profile__add-button');
-const modalCloseButton = document.querySelectorAll('.popup__close');
+const modalCloseButtons = document.querySelectorAll('.popup__close');
 
 const modalEditProfile = document.querySelector('.popup_type_edit');
 const modalCreateNewCard = document.querySelector('.popup_type_new-card');
-export const modalImagePreview = document.querySelector('.popup_type_image');
+const modalImagePreview = document.querySelector('.popup_type_image');
 
 const editProfileForm =  getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
@@ -25,23 +25,18 @@ initialCards.forEach(function (cardData) {
 });
 
 profileEditButton.addEventListener('click', () => {
+  editProfileForm.elements.name.value = profileTitle.textContent
+  editProfileForm.elements.description.value = profileDescription.textContent
   openModal(modalEditProfile)
 })
 
-modalCloseButton[0].addEventListener('click', () => {
-  closeModal(modalEditProfile)
+modalCloseButtons.forEach(closeButton => {
+  const closeButtonPopup = closeButton.closest('.popup');
+  closeButton.addEventListener('click', () => { closeModal(closeButtonPopup) });
 })
 
 addNewCardButton.addEventListener('click', () => {
   openModal(modalCreateNewCard)
-})
-
-modalCloseButton[1].addEventListener('click', () => {  
-  closeModal(modalCreateNewCard)
-})
-
-modalCloseButton[2].addEventListener('click', () => {  
-  closeModal(modalImagePreview)
 })
 
 editProfileForm.addEventListener('submit', (e) => {
@@ -62,3 +57,9 @@ addNewCardForm.addEventListener('submit', (e) => {
   addNewCardForm.reset()
 })
 
+function previewImage(e) {  
+  modalImagePreview.querySelector('.popup__image').src = e.target.src;
+  modalImagePreview.querySelector('.popup__image').alt = e.target.alt;
+  modalImagePreview.querySelector('.popup__caption').textContent = e.target.alt;
+  openModal(modalImagePreview);
+}
