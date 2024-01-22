@@ -1,13 +1,15 @@
 import { modalImagePreview } from "../index.js";
 
+const popupIsOpened = 'popup_is-opened'
+
 export function openModal(modalName) {
-  modalName.classList.add('popup_is-opened');
+  modalName.classList.add(popupIsOpened);
   document.addEventListener('keydown', escapeClose);
   document.addEventListener('click', overlayClose)
 }
 
 export function closeModal(modalName) {
-  modalName.classList.remove('popup_is-opened');
+  modalName.classList.remove(popupIsOpened);
   document.removeEventListener('keydown', escapeClose);
   document.removeEventListener('click', overlayClose)
 }
@@ -19,7 +21,9 @@ function escapeClose(e) {
 }
 
 function overlayClose(e) {
-    e.target.classList.remove('popup_is-opened')
+  if(e.target.classList.contains(popupIsOpened)){
+    e.target.classList.remove(popupIsOpened)
+  }
 }
 
 export function getFormByName(name) {
