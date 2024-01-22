@@ -1,6 +1,6 @@
 import './pages/index.css';
 import {initialCards} from './components/cards.js';
-import {openModal, closeModal, getFormByName} from './components/modal.js';
+import {openModal, closeModal, getFormByName, previewImage} from './components/modal.js';
 import {createCard, deleteCard, likeCard} from './components/card.js';
 
 
@@ -14,7 +14,7 @@ const modalCloseButton = document.querySelectorAll('.popup__close');
 
 const modalEditProfile = document.querySelector('.popup_type_edit');
 const modalCreateNewCard = document.querySelector('.popup_type_new-card');
-const modalImagePreview = document.querySelector('.popup_type_image');
+export const modalImagePreview = document.querySelector('.popup_type_image');
 
 const editProfileForm =  getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
@@ -62,8 +62,3 @@ addNewCardForm.addEventListener('submit', (e) => {
   addNewCardForm.reset()
 })
 
-function previewImage(e) {  
-  modalImagePreview.querySelector('.popup__image').src = e.target.src;
-  modalImagePreview.querySelector('.popup__caption').textContent = e.target.alt;
-  openModal(modalImagePreview);
-}

@@ -1,5 +1,3 @@
-import { openModal } from "./modal";
-
 const cardTemplate = document.querySelector("#card-template").content;
 
 export function createCard(cardData, deleteCard, likeCard, openCard) {

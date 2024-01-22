@@ -1,3 +1,5 @@
+import { modalImagePreview } from "../index.js";
+
 export function openModal(modalName){
   modalName.classList.add('popup_is-opened');
   document.addEventListener('keydown', escapeClose);
@@ -23,3 +25,8 @@ export function getFormByName(name){
   return document.forms[name]
 }
 
+export function previewImage(e) {  
+  modalImagePreview.querySelector('.popup__image').src = e.target.src;
+  modalImagePreview.querySelector('.popup__caption').textContent = e.target.alt;
+  openModal(modalImagePreview);
+}
