@@ -30,20 +30,13 @@ profileEditButton.addEventListener('click', () => {
   openModal(modalEditProfile)
 })
 
-modalCloseButtons[0].addEventListener('click', () => {
-  closeModal(modalEditProfile)
+modalCloseButtons.forEach(closeButton => {
+  const closeButtonPopup = closeButton.closest('.popup');
+  closeButton.addEventListener('click', () => { closeModal(closeButtonPopup) });
 })
 
 addNewCardButton.addEventListener('click', () => {
   openModal(modalCreateNewCard)
-})
-
-modalCloseButtons[1].addEventListener('click', () => {  
-  closeModal(modalCreateNewCard)
-})
-
-modalCloseButtons[2].addEventListener('click', () => {  
-  closeModal(modalImagePreview)
 })
 
 editProfileForm.addEventListener('submit', (e) => {
