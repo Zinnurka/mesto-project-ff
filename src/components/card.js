@@ -20,7 +20,7 @@ export function deleteCard(card) {
   card.remove();
 }
 
-export function likeCard(e){
+export function likeCard(e) {
   e.target.classList.toggle('card__like-button_is-active');
 }
 

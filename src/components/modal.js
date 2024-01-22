@@ -1,6 +1,6 @@
 import { modalImagePreview } from "../index.js";
 
-export function openModal(modalName){
+export function openModal(modalName) {
   modalName.classList.add('popup_is-opened');
   document.addEventListener('keydown', escapeClose);
   document.addEventListener('click', overlayClose)
@@ -21,7 +21,7 @@ function overlayClose(e) {
     e.target.classList.remove('popup_is-opened')
 }
 
-export function getFormByName(name){
+export function getFormByName(name) {
   return document.forms[name]
 }
 
