@@ -56,3 +56,9 @@ addNewCardForm.addEventListener('click', (e) => {
   closePopup(popupCreateNewCard)
   addNewCardForm.reset()
 })
+
+cardsContainer.addEventListener('click', (e) => {
+  if(e.target.classList.contains('card__like-button')){
+    e.target.classList.toggle('card__like-button_is-active');
+  }
+})
