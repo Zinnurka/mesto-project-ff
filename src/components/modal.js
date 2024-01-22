@@ -1,5 +1,3 @@
-import { modalImagePreview } from "../index.js";
-
 const popupIsOpened = 'popup_is-opened'
 
 export function openModal(modalName) {

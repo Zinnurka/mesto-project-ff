@@ -14,7 +14,7 @@ const modalCloseButtons = document.querySelectorAll('.popup__close');
 
 const modalEditProfile = document.querySelector('.popup_type_edit');
 const modalCreateNewCard = document.querySelector('.popup_type_new-card');
-export const modalImagePreview = document.querySelector('.popup_type_image');
+const modalImagePreview = document.querySelector('.popup_type_image');
 
 const editProfileForm =  getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
