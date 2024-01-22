@@ -30,8 +30,3 @@ export function getFormByName(name) {
   return document.forms[name]
 }
 
-export function previewImage(e) {  
-  modalImagePreview.querySelector('.popup__image').src = e.target.src;
-  modalImagePreview.querySelector('.popup__caption').textContent = e.target.alt;
-  openModal(modalImagePreview);
-}
