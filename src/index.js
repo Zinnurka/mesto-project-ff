@@ -14,12 +14,14 @@ const popupCloseButton = document.querySelectorAll('.popup__close');
 
 const popupEditProfile = document.querySelector('.popup_type_edit');
 const popupCreateNewCard = document.querySelector('.popup_type_new-card');
+const popupImagePreview = document.querySelector('.popup_type_image');
+
 
 const editProfileForm =  getFormByName("edit-profile")
 const addNewCardForm = getFormByName("new-place")
 
 initialCards.forEach(function (cardData) {
-  const card = createCard(cardData, deleteCard, likeCard);
+  const card = createCard(cardData, deleteCard, likeCard, previewImage);
   cardsContainer.append(card);
 });
 
@@ -55,4 +57,15 @@ addNewCardForm.addEventListener('submit', (e) => {
   cardsContainer.prepend(createCard(cardData, deleteCard))
   closePopup(popupCreateNewCard)
   addNewCardForm.reset()
+})
+
+function previewImage(e) {
+  
+  popupImagePreview.querySelector('.popup__image').src = e.target.src;
+  popupImagePreview.querySelector('.popup__caption').textContent = e.target.alt;
+  openPopup(popupImagePreview);
+}
+
+popupCloseButton[2].addEventListener('click', () => {  
+  closePopup(popupImagePreview)
 })
