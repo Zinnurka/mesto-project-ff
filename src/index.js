@@ -1,7 +1,7 @@
 import './pages/index.css';
-import {initialCards} from './components/cards.js'
-import {openPopup, closePopup, getFormByName} from './components/modal.js'
-import {createCard, deleteCard, likeCard} from './components/card.js'
+import {initialCards} from './components/cards.js';
+import {openModal, closeModal, getFormByName} from './components/modal.js';
+import {createCard, deleteCard, likeCard} from './components/card.js';
 
 
 const cardsContainer = document.querySelector(".places__list");
@@ -10,15 +10,14 @@ const profileDescription = document.querySelector('.profile__description');
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const addNewCardButton = document.querySelector('.profile__add-button');
-const popupCloseButton = document.querySelectorAll('.popup__close');
+const modalCloseButton = document.querySelectorAll('.popup__close');
 
-const popupEditProfile = document.querySelector('.popup_type_edit');
-const popupCreateNewCard = document.querySelector('.popup_type_new-card');
-const popupImagePreview = document.querySelector('.popup_type_image');
+const modalEditProfile = document.querySelector('.popup_type_edit');
+const modalCreateNewCard = document.querySelector('.popup_type_new-card');
+const modalImagePreview = document.querySelector('.popup_type_image');
 
-
-const editProfileForm =  getFormByName("edit-profile")
-const addNewCardForm = getFormByName("new-place")
+const editProfileForm =  getFormByName("edit-profile");
+const addNewCardForm = getFormByName("new-place");
 
 initialCards.forEach(function (cardData) {
   const card = createCard(cardData, deleteCard, likeCard, previewImage);
@@ -26,19 +25,23 @@ initialCards.forEach(function (cardData) {
 });
 
 profileEditButton.addEventListener('click', () => {
-  openPopup(popupEditProfile)
+  openModal(modalEditProfile)
 })
 
-popupCloseButton[0].addEventListener('click', () => {
-  closePopup(popupEditProfile)
+modalCloseButton[0].addEventListener('click', () => {
+  closeModal(modalEditProfile)
 })
 
 addNewCardButton.addEventListener('click', () => {
-  openPopup(popupCreateNewCard)
+  openModal(modalCreateNewCard)
 })
 
-popupCloseButton[1].addEventListener('click', () => {  
-  closePopup(popupCreateNewCard)
+modalCloseButton[1].addEventListener('click', () => {  
+  closeModal(modalCreateNewCard)
+})
+
+modalCloseButton[2].addEventListener('click', () => {  
+  closeModal(modalImagePreview)
 })
 
 editProfileForm.addEventListener('submit', (e) => {
@@ -46,26 +49,21 @@ editProfileForm.addEventListener('submit', (e) => {
   const name = editProfileForm.elements.name.value;
   const description = editProfileForm.elements.description.value;
   profileTitle.textContent = name;
-  profileDescription.textContent = description;
+  profileDescription.textContent = description
 })
 
 addNewCardForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const placeName = addNewCardForm.elements['place-name'].value
-  const link = addNewCardForm.elements['link'].value
-  const cardData = {name: placeName, link: link }
-  cardsContainer.prepend(createCard(cardData, deleteCard))
-  closePopup(popupCreateNewCard)
+  const placeName = addNewCardForm.elements['place-name'].value;
+  const link = addNewCardForm.elements['link'].value;
+  const cardData = {name: placeName, link: link };
+  cardsContainer.prepend(createCard(cardData, deleteCard));
+  closeModal(modalCreateNewCard);
   addNewCardForm.reset()
 })
 
-function previewImage(e) {
-  
-  popupImagePreview.querySelector('.popup__image').src = e.target.src;
-  popupImagePreview.querySelector('.popup__caption').textContent = e.target.alt;
-  openPopup(popupImagePreview);
+function previewImage(e) {  
+  modalImagePreview.querySelector('.popup__image').src = e.target.src;
+  modalImagePreview.querySelector('.popup__caption').textContent = e.target.alt;
+  openModal(modalImagePreview);
 }
-
-popupCloseButton[2].addEventListener('click', () => {  
-  closePopup(popupImagePreview)
-})

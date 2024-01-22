@@ -1,17 +1,17 @@
-export function openPopup(popupName){
-  popupName.classList.add('popup_is-opened');
+export function openModal(modalName){
+  modalName.classList.add('popup_is-opened');
   document.addEventListener('keydown', escapeClose);
   document.addEventListener('click', overlayClose)
 }
 
-export function closePopup(popupName) {
-  popupName.classList.remove('popup_is-opened');
+export function closeModal(modalName) {
+  modalName.classList.remove('popup_is-opened');
 }
 
 function escapeClose(e) {
-  const popupIsOpened = document.querySelector('.popup_is-opened')
+  const modalIsOpened = document.querySelector('.popup_is-opened');
   if (e.key === 'Escape') {
-    closePopup(popupIsOpened)
+    closeModal(modalIsOpened)
   }
 }
 
@@ -22,3 +22,4 @@ function overlayClose(e) {
 export function getFormByName(name){
   return document.forms[name]
 }
+
