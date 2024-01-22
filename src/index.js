@@ -1,7 +1,7 @@
 import './pages/index.css';
 import {initialCards} from './components/cards.js'
 import {openPopup, closePopup, getFormByName} from './components/modal.js'
-import {createCard, deleteCard} from './components/card.js'
+import {createCard, deleteCard, likeCard} from './components/card.js'
 
 
 const cardsContainer = document.querySelector(".places__list");
@@ -19,7 +19,7 @@ const editProfileForm =  getFormByName("edit-profile")
 const addNewCardForm = getFormByName("new-place")
 
 initialCards.forEach(function (cardData) {
-  const card = createCard(cardData, deleteCard);
+  const card = createCard(cardData, deleteCard, likeCard);
   cardsContainer.append(card);
 });
 
@@ -47,7 +47,7 @@ editProfileForm.addEventListener('submit', (e) => {
   profileDescription.textContent = description;
 })
 
-addNewCardForm.addEventListener('click', (e) => {
+addNewCardForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const placeName = addNewCardForm.elements['place-name'].value
   const link = addNewCardForm.elements['link'].value
@@ -55,10 +55,4 @@ addNewCardForm.addEventListener('click', (e) => {
   cardsContainer.prepend(createCard(cardData, deleteCard))
   closePopup(popupCreateNewCard)
   addNewCardForm.reset()
-})
-
-cardsContainer.addEventListener('click', (e) => {
-  if(e.target.classList.contains('card__like-button')){
-    e.target.classList.toggle('card__like-button_is-active');
-  }
 })
