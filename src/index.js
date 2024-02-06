@@ -2,7 +2,7 @@ import './pages/index.css';
 import {initialCards} from './components/cards.js';
 import {openModal, closeModal, getFormByName} from './components/modal.js';
 import {createCard, deleteCard, likeCard} from './components/card.js';
-import { isValid } from './components/validator.js';
+import './components/validator.js'
 
 
 const cardsContainer = document.querySelector(".places__list");
@@ -20,7 +20,7 @@ const modalImagePreview = document.querySelector('.popup_type_image');
 const editProfileForm =  getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
 
-const profileName = document.querySelector(".popup__input_type_name")
+
 
 initialCards.forEach(function (cardData) {
   const card = createCard(cardData, deleteCard, likeCard, previewImage);
@@ -48,16 +48,6 @@ editProfileForm.addEventListener('submit', (e) => {
   const description = editProfileForm.elements.description.value;
   profileTitle.textContent = name;
   profileDescription.textContent = description
-})
-
-profileName.addEventListener('input',()=>{
-  if (!profileName.validity.valid){
-    profileName.classList.add('popup__input_type_error')
-    const err = document.querySelector(`.popup__input_type_name-error`)
-    err.textContent = profileName.validationMessage
-  } else {
-    profileName.classList.remove('popup__input_type_error');
-  }
 })
 
 addNewCardForm.addEventListener('submit', (e) => {
