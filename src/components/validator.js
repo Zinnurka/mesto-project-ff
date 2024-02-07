@@ -1,5 +1,4 @@
 const popupInputTypeError = 'popup__input_type_error'
-const popupinputTypeNameError = '.popup__input_type_name-error'
 const popupInputErrorActive = 'popup__input-error_active'
 const popupButtonSubmitInactive = 'popup_button__submit_inactive'
 const formElement = '.popup__form';
@@ -16,14 +15,14 @@ function isValid(formElement, inputElement){
 }
 
 function showInputError(formElement, inputElement, errorMessage) {
-  const errorElement = formElement.querySelector(popupinputTypeNameError);
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(popupInputTypeError);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(popupInputErrorActive)
 };
 
 function hideInputError(formElement, inputElement) {
-  const errorElement = formElement.querySelector(popupinputTypeNameError);
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(popupInputTypeError);
   errorElement.textContent = '';
   errorElement.classList.remove(popupInputErrorActive)
