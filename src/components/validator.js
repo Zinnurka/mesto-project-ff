@@ -73,9 +73,7 @@ export function clearValidation(formElement) {
   inputList.forEach((inputElement) => {
     console.log(inputElement)
     hideInputError(formElement,inputElement);
-  });  
-  buttonElement.disabled = true;
-  buttonElement.classList.add(popupButtonSubmitInactive);
+  });
 }
 
 enableValidation();
