@@ -68,4 +68,14 @@ function toggleButtonState (inputList, buttonElement) {
   }
 };
 
+export function clearValidation(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  inputList.forEach((inputElement) => {
+    console.log(inputElement)
+    hideInputError(formElement,inputElement);
+  });  
+  buttonElement.disabled = true;
+  buttonElement.classList.add(popupButtonSubmitInactive);
+}
+
 enableValidation();
