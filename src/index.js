@@ -2,6 +2,8 @@ import './pages/index.css';
 import {initialCards} from './components/cards.js';
 import {openModal, closeModal, getFormByName} from './components/modal.js';
 import {createCard, deleteCard, likeCard} from './components/card.js';
+import './components/validator.js';
+import { clearValidation } from './components/validator.js';
 
 
 const cardsContainer = document.querySelector(".places__list");
@@ -19,12 +21,15 @@ const modalImagePreview = document.querySelector('.popup_type_image');
 const editProfileForm =  getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
 
+
+
 initialCards.forEach(function (cardData) {
   const card = createCard(cardData, deleteCard, likeCard, previewImage);
   cardsContainer.append(card);
 });
 
-profileEditButton.addEventListener('click', () => {
+profileEditButton.addEventListener('click', () => {  
+  clearValidation(editProfileForm)
   editProfileForm.elements.name.value = profileTitle.textContent
   editProfileForm.elements.description.value = profileDescription.textContent
   openModal(modalEditProfile)
@@ -35,7 +40,8 @@ modalCloseButtons.forEach(closeButton => {
   closeButton.addEventListener('click', () => { closeModal(closeButtonPopup) });
 })
 
-addNewCardButton.addEventListener('click', () => {
+addNewCardButton.addEventListener('click', () => {  
+  clearValidation(addNewCardForm);
   openModal(modalCreateNewCard)
 })
 
