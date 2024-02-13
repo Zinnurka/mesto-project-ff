@@ -4,7 +4,7 @@ import {openModal, closeModal, getFormByName} from './components/modal.js';
 import {createCard, deleteCard, likeCard} from './components/card.js';
 import './components/validator.js';
 import { clearValidation } from './components/validator.js';
-import {getUserData, getCards} from './components/api.js'
+import {getUserData, getCards, editUserData} from './components/api.js'
 
 const cardsContainer = document.querySelector(".places__list");
 const profileTitle = document.querySelector('.profile__title');
@@ -61,8 +61,15 @@ editProfileForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = editProfileForm.elements.name.value;
   const description = editProfileForm.elements.description.value;
-  profileTitle.textContent = name;
-  profileDescription.textContent = description
+  editUserData({
+    name: name,
+    about: description
+  }).then(()=>{
+    getUserData().then((data)=>{
+      profileTitle.textContent = data.name;
+      profileDescription.textContent = data.about;
+    })
+  })
 })
 
 addNewCardForm.addEventListener('submit', (e) => {
