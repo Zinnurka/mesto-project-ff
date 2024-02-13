@@ -4,6 +4,7 @@ import {openModal, closeModal, getFormByName} from './components/modal.js';
 import {createCard, deleteCard, likeCard} from './components/card.js';
 import './components/validator.js';
 import { clearValidation } from './components/validator.js';
+import './components/api.js'
 
 
 const cardsContainer = document.querySelector(".places__list");
