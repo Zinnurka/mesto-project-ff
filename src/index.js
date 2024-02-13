@@ -6,8 +6,6 @@ import './components/validator.js';
 import { clearValidation } from './components/validator.js';
 import {getUserData, getCards} from './components/api.js'
 
-
-
 const cardsContainer = document.querySelector(".places__list");
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
@@ -25,17 +23,21 @@ const editProfileForm =  getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
 
 
-getCards().then((data)=>{
-  data.forEach(function (cardData) {
-    const card = createCard(cardData, deleteCard, likeCard, previewImage);
-    cardsContainer.append(card);
+Promise.all([getCards,getUserData]).then(([getCards,getUserData]) => {
+  getCards().then((data)=>{
+    data.forEach(function (cardData) {
+      const card = createCard(cardData, deleteCard, likeCard, previewImage);
+      cardsContainer.append(card);
+    })
   })
-})
-
-getUserData().then((data)=>{
-  profileTitle.textContent = data.name;
-  profileDescription.textContent = data.about;
-  profileImage.setAttribute('style', `background-image: url(${data.avatar});`);
+  getUserData().then((data)=>{
+    profileTitle.textContent = data.name;
+    profileDescription.textContent = data.about;
+    profileImage.setAttribute('style', `background-image: url(${data.avatar});`);
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
 })
 
 profileEditButton.addEventListener('click', () => {  
