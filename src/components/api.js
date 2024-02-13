@@ -33,3 +33,7 @@ export function editUserData(json) {
 export function getCards() {
   return request('GET', cards)
 }
+
+export function addCard(json) {
+  return request('POST', cards, json)
+}
