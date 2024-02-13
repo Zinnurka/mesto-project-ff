@@ -13,11 +13,11 @@ function handleResponse(response){
 }
 
 function get(endpoint) {
-  return fetch(endpoint, { headers: headers }).then((response) => {
-    handleResponse(response)
+  return fetch(endpoint, { headers: headers, method: 'GET' }).then((response) => {
+    return handleResponse(response)
   });
 }
 
-function getUserData() {
+export function getUserData() {
   return get(me);
 }
