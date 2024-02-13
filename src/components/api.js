@@ -21,3 +21,7 @@ function get(endpoint) {
 export function getUserData() {
   return get(me);
 }
+
+export function getCards() {
+  return get(cards)
+}

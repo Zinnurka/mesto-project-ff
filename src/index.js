@@ -4,7 +4,7 @@ import {openModal, closeModal, getFormByName} from './components/modal.js';
 import {createCard, deleteCard, likeCard} from './components/card.js';
 import './components/validator.js';
 import { clearValidation } from './components/validator.js';
-import {getUserData} from './components/api.js'
+import {getUserData, getCards} from './components/api.js'
 
 
 
@@ -25,11 +25,12 @@ const editProfileForm =  getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
 
 
-
-initialCards.forEach(function (cardData) {
-  const card = createCard(cardData, deleteCard, likeCard, previewImage);
-  cardsContainer.append(card);
-});
+getCards().then((data)=>{
+  data.forEach(function (cardData) {
+    const card = createCard(cardData, deleteCard, likeCard, previewImage);
+    cardsContainer.append(card);
+  })
+})
 
 getUserData().then((data)=>{
   profileTitle.textContent = data.name;
