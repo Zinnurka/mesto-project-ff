@@ -1,43 +1,43 @@
 const baseUrl = "https://nomoreparties.co";
-const cards = `${baseUrl}/v1/wff-cohort-6/cards`;
-const me = `${baseUrl}/v1/wff-cohort-6/users/me`;
 const headers = {
-  'Authorization': 'aa041bbb-16e8-4600-a3ac-8ac9df1b21a4',
-  'Content-Type': 'application/json'
+  Authorization: "aa041bbb-16e8-4600-a3ac-8ac9df1b21a4",
+  "Content-Type": "application/json",
 };
 
-function handleResponse(response){
+function handleResponse(response) {
   if (!response.ok) {
     return Promise.reject(`Ошибка: ${response.status}`);
   }
   return response.json();
 }
 
-function request(method, endpoint, json=undefined) {
-  if(json){
-    json = JSON.stringify(json)
+function request(method, endpoint, json = undefined) {
+  if (json) {
+    json = JSON.stringify(json);
   }
-  return fetch(endpoint, { headers: headers, method: method, body: json }).then((response) => {
-    return handleResponse(response)
-  });
+  return fetch(endpoint, { headers: headers, method: method, body: json }).then(
+    (response) => {
+      return handleResponse(response);
+    }
+  );
 }
 
 export function getUserData() {
-  return request('GET', me);
+  return request("GET", `${baseUrl}/v1/wff-cohort-6/users/me`);
 }
 
 export function editUserData(json) {
-  return request('PATCH', me , json)
+  return request("PATCH", `${baseUrl}/v1/wff-cohort-6/users/me`, json);
 }
 
 export function getCards() {
-  return request('GET', cards)
+  return request("GET", `${baseUrl}/v1/wff-cohort-6/cards`);
 }
 
 export function addCard(json) {
-  return request('POST', cards, json)
+  return request("POST", `${baseUrl}/v1/wff-cohort-6/cards`, json);
 }
 
 export function deleteCard(cardID) {
-  return request('DELETE',`${baseUrl}/v1/wff-cohort-6/cards/${cardID}` )
+  return request("DELETE", `${baseUrl}/v1/wff-cohort-6/cards/${cardID}`);
 }
