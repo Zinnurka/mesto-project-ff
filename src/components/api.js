@@ -37,3 +37,7 @@ export function getCards() {
 export function addCard(json) {
   return request('POST', cards, json)
 }
+
+export function deleteCard(cardID) {
+  return request('DELETE',`${baseUrl}/v1/wff-cohort-6/cards/${cardID}` )
+}

@@ -1,10 +1,10 @@
 import './pages/index.css';
 import {initialCards} from './components/cards.js';
 import {openModal, closeModal, getFormByName} from './components/modal.js';
-import {createCard, deleteCard, likeCard} from './components/card.js';
+import {createCard, likeCard} from './components/card.js';
 import './components/validator.js';
 import { clearValidation } from './components/validator.js';
-import {getUserData, getCards, editUserData, addCard} from './components/api.js'
+import {getUserData, getCards, editUserData, addCard, deleteCard} from './components/api.js'
 
 const cardsContainer = document.querySelector(".places__list");
 const profileTitle = document.querySelector('.profile__title');
@@ -23,22 +23,26 @@ const editProfileForm =  getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
 
 
-Promise.all([getCards,getUserData]).then(([getCards,getUserData]) => {
-  getCards().then((data)=>{
-    data.forEach(function (cardData) {
-      const card = createCard(cardData, deleteCard, likeCard, previewImage);
-      cardsContainer.append(card);
-    })
-  })
+Promise.all([getUserData,getCards]).then(([getUserData,getCards]) => {  
   getUserData().then((data)=>{
     profileTitle.textContent = data.name;
     profileDescription.textContent = data.about;
     profileImage.setAttribute('style', `background-image: url(${data.avatar});`);
+    console.log(data._id)
+    return data._id
+  }).then((userID)=>{
+    getCards().then((data)=>{
+      data.forEach(function (cardData) {
+        const card = createCard(cardData, userID, deleteCard, likeCard, previewImage);
+        cardsContainer.append(card);
+      })
+    })
+  })  
   })
   .catch((error)=>{
     console.log(error)
   })
-})
+
 
 profileEditButton.addEventListener('click', () => {  
   clearValidation(editProfileForm)
