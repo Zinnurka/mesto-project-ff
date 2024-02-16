@@ -89,6 +89,8 @@ addNewCardButton.addEventListener("click", () => {
 
 editProfileForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  const saveButton = editProfileForm.querySelector(".popup__button")
+  renderLoading(true, saveButton)
   const name = editProfileForm.elements.name.value;
   const description = editProfileForm.elements.description.value;
   editUserData({
@@ -98,17 +100,22 @@ editProfileForm.addEventListener("submit", (e) => {
     getUserData().then((data) => {
       profileTitle.textContent = data.name;
       profileDescription.textContent = data.about;
+    }).finally(()=>{
+      renderLoading(false, saveButton)
     });
   });
 });
 
 addNewCardForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  const saveButton = addNewCardForm.querySelector(".popup__button")
+  renderLoading(true, saveButton)
   const placeName = addNewCardForm.elements["place-name"].value;
   const link = addNewCardForm.elements["link"].value;
   const cardData = { name: placeName, link: link };
   addCard(cardData);
   cardsContainer.prepend(createCard(cardData, deleteCard));
+  renderLoading(false, saveButton);
   closeModal(modalCreateNewCard);
   addNewCardForm.reset();
 });
@@ -122,9 +129,20 @@ function previewImage(e) {
 
 editAvatarForm.addEventListener("submit", (e)=>{
   e.preventDefault();
+  const saveButton = editAvatarForm.querySelector(".popup__button")
+  renderLoading(true, saveButton)
   const link = editAvatarForm.elements["url"].value;
   console.log(link)
   editAvatar({'avatar':link}).then(()=>{
+    renderLoading(false, saveButton);
     location.reload()
   })
 })
+
+function renderLoading(isLoading, buttonElement){
+  if (isLoading){
+    buttonElement.textContent = 'Сохранение...'
+  } else {
+    buttonElement.textContent = 'Сохранить'
+  }
+}
