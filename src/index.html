@@ -13,8 +13,10 @@
     <img src="<%=require('./images/logo.svg')%>" alt="Логотип проекта масто" class="logo header__logo">
   </header>
   <main class="content">
-    <section class="profile page__section">
-      <div class="profile__image"></div>
+    <section class="profile page__section">     
+      <div class="profile__image">
+        <div class="profile__image-edit-icon"></div>
+      </div>
       <div class="profile__info">
         <h1 class="profile__title"></h1>
         <button class="profile__edit-button" type="button"></button>
@@ -101,6 +103,24 @@
       <img src="" alt="" class="popup__image">
       <p class="popup__caption"></p>
     </div>
+  </div>
+</div>
+<div class="popup popup_type_edit-avatar">
+  <div class="popup__content">
+    <button type="button" class="popup__close"></button>
+    <h3 class="popup__title">Обновить аватар</h3>
+    <form class="popup__form" name="edit-avatar" data-id="">
+      <input
+        type="url"
+        name="url"
+        id="avatar-input"
+        class="popup__input popup__input_type_avatar-url"
+        placeholder="Вставьте ссылку на изображение"
+        required
+      />
+      <span class="avatar-input-error popup__input-error"></span>
+      <button type="submit" class="button popup__button">Сохранить</button>
+    </form>
   </div>
 </div>
 

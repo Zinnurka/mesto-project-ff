@@ -30,6 +30,10 @@ export function editUserData(json) {
   return request("PATCH", `${baseUrl}/v1/wff-cohort-6/users/me`, json);
 }
 
+export function editAvatar(json) {
+  return request("PATCH", `${baseUrl}/v1/wff-cohort-6/users/me/avatar`, json);
+}
+
 export function getCards() {
   return request("GET", `${baseUrl}/v1/wff-cohort-6/cards`);
 }

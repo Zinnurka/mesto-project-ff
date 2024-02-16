@@ -1,5 +1,4 @@
 import "./pages/index.css";
-import { initialCards } from "./components/cards.js";
 import { openModal, closeModal, getFormByName } from "./components/modal.js";
 import { createCard, likeCard } from "./components/card.js";
 import "./components/validator.js";
@@ -10,6 +9,7 @@ import {
   editUserData,
   addCard,
   deleteCard,
+  editAvatar
 } from "./components/api.js";
 
 const cardsContainer = document.querySelector(".places__list");
@@ -20,13 +20,16 @@ const profileImage = document.querySelector(".profile__image");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
 const modalCloseButtons = document.querySelectorAll(".popup__close");
+const avatarEditButton = document.querySelector(".profile__image")
 
 const modalEditProfile = document.querySelector(".popup_type_edit");
 const modalCreateNewCard = document.querySelector(".popup_type_new-card");
 const modalImagePreview = document.querySelector(".popup_type_image");
+const modalEditAvatar = document.querySelector(".popup_type_edit-avatar")
 
 const editProfileForm = getFormByName("edit-profile");
 const addNewCardForm = getFormByName("new-place");
+const editAvatarForm = getFormByName("edit-avatar")
 
 Promise.all([getUserData, getCards])
   .then(([getUserData, getCards]) => {
@@ -66,6 +69,11 @@ profileEditButton.addEventListener("click", () => {
   editProfileForm.elements.description.value = profileDescription.textContent;
   openModal(modalEditProfile);
 });
+
+avatarEditButton.addEventListener("click", ()=> {
+  clearValidation(editAvatarForm);
+  openModal(modalEditAvatar)
+})
 
 modalCloseButtons.forEach((closeButton) => {
   const closeButtonPopup = closeButton.closest(".popup");
@@ -111,3 +119,12 @@ function previewImage(e) {
   modalImagePreview.querySelector(".popup__caption").textContent = e.target.alt;
   openModal(modalImagePreview);
 }
+
+editAvatarForm.addEventListener("submit", (e)=>{
+  e.preventDefault();
+  const link = editAvatarForm.elements["url"].value;
+  console.log(link)
+  editAvatar({'avatar':link}).then(()=>{
+    location.reload()
+  })
+})
