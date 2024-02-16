@@ -41,3 +41,11 @@ export function addCard(json) {
 export function deleteCard(cardID) {
   return request("DELETE", `${baseUrl}/v1/wff-cohort-6/cards/${cardID}`);
 }
+
+export function addLike(cardID) {
+  return request("PUT", `${baseUrl}/v1/wff-cohort-6/cards/likes/${cardID}`);
+}
+
+export function deleteLike(cardID) {
+  return request("DELETE", `${baseUrl}/v1/wff-cohort-6/cards/likes/${cardID}`);
+}
