@@ -42,6 +42,8 @@ export function likeCard(likeButton, cardData, cardElement, userId) {
         data.likes.length;
     }).then(()=>{
       likeButton.classList.toggle("card__like-button_is-active");
+    }).catch((response)=>{
+      console.log(`Ошибка: ${response.status}`)
     });
     
   } else {
@@ -50,7 +52,8 @@ export function likeCard(likeButton, cardData, cardElement, userId) {
         data.likes.length;
     }).then(()=>{
       likeButton.classList.toggle("card__like-button_is-active");
-    });
-    
+    }).catch((response)=>{
+      console.log(`Ошибка: ${response.status}`)
+    });    
   }
 }
