@@ -5,12 +5,13 @@ const cardTemplate = document.querySelector("#card-template").content;
 export function createCard(cardData, userId, deleteCard, likeCard, openCard) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const deleteButton = cardElement.querySelector(".card__delete-button");
+  const cardImage = cardElement.querySelector(".card__image");
   if (cardData.owner && cardData.owner._id !== userId) {
     deleteButton.remove();
   }
-  cardElement.querySelector(".card__image").src = cardData.link;
+  cardImage.src = cardData.link;
   cardElement.querySelector(".card__title").textContent = cardData.name;
-  cardElement.querySelector(".card__image").alt = cardData.name;
+  cardImage.alt = cardData.name;
   cardElement.querySelector(".card__like-counter").textContent =
     cardData.likes?.length;
   deleteButton.addEventListener("click", function (event) {
@@ -24,7 +25,7 @@ export function createCard(cardData, userId, deleteCard, likeCard, openCard) {
   likeButton.addEventListener("click", () => {
     likeCard(likeButton, cardData._id, cardData.likes?.length, cardElement);
   });
-  const cardImage = cardElement.querySelector(".card__image");
+  
   cardImage.addEventListener("click", openCard);
   return cardElement;
 }
