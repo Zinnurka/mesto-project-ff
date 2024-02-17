@@ -2,7 +2,7 @@ import "./pages/index.css";
 import { openModal, closeModal, getFormByName } from "./components/modal.js";
 import { createCard, likeCard } from "./components/card.js";
 import "./components/validator.js";
-import { clearValidation } from "./components/validator.js";
+import { clearValidation, config } from "./components/validator.js";
 import {
   getUserData,
   getCards,
@@ -64,14 +64,14 @@ Promise.all([getUserData, getCards])
   });
 
 profileEditButton.addEventListener("click", () => {
-  clearValidation(editProfileForm);
+  clearValidation(editProfileForm, config);
   editProfileForm.elements.name.value = profileTitle.textContent;
   editProfileForm.elements.description.value = profileDescription.textContent;
   openModal(modalEditProfile);
 });
 
 avatarEditButton.addEventListener("click", ()=> {
-  clearValidation(editAvatarForm);
+  clearValidation(editAvatarForm, config);
   openModal(modalEditAvatar)
 })
 
@@ -83,7 +83,7 @@ modalCloseButtons.forEach((closeButton) => {
 });
 
 addNewCardButton.addEventListener("click", () => {
-  clearValidation(addNewCardForm);
+  clearValidation(addNewCardForm, config);
   openModal(modalCreateNewCard);
 });
 
