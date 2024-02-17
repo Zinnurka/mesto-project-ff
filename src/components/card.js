@@ -20,7 +20,7 @@ export function createCard(cardData, userId, deleteCard, likeCard, openCard) {
     });
   });
   const likeButton = cardElement.querySelector(".card__like-button");
-  if (cardData.likes?.length > 0) {
+  if (cardData.likes?.find(like=>like._id === userId)) {    
     likeButton.classList.add("card__like-button_is-active");
   }
   likeButton.addEventListener("click", () => {
