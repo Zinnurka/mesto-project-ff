@@ -14,19 +14,19 @@ export function createCard(cardData, userId, deleteCard, likeCard, openCard) {
   cardImage.alt = cardData.name;
   cardElement.querySelector(".card__like-counter").textContent =
     cardData.likes?.length;
-  deleteButton.addEventListener("click", function (event) {    
-    deleteCard(cardData._id).then(()=>{
+  deleteButton.addEventListener("click", function (event) {
+    deleteCard(cardData._id).then(() => {
       hideCard(event.target.closest(".card"));
     });
   });
   const likeButton = cardElement.querySelector(".card__like-button");
-  if (cardData.likes?.find(like=>like._id === userId)) {    
+  if (cardData.likes?.find((like) => like._id === userId)) {
     likeButton.classList.add("card__like-button_is-active");
   }
   likeButton.addEventListener("click", () => {
     likeCard(likeButton, cardData, cardElement, userId);
   });
-  
+
   cardImage.addEventListener("click", openCard);
   return cardElement;
 }
@@ -36,24 +36,29 @@ function hideCard(card) {
 }
 
 export function likeCard(likeButton, cardData, cardElement, userId) {
-  if (cardData.likes?.find(like=>like._id === userId)) {
-    deleteLike(cardData._id).then((data) => {
-      cardElement.querySelector(".card__like-counter").textContent =
-        data.likes.length;
-    }).then(()=>{
-      likeButton.classList.toggle("card__like-button_is-active");
-    }).catch((response)=>{
-      console.log(`Ошибка: ${response.status}`)
-    });
-    
+  if (cardData.likes?.find((like) => like._id === userId)) {
+    deleteLike(cardData._id)
+      .then((data) => {
+        cardElement.querySelector(".card__like-counter").textContent =
+          data.likes.length;
+      })
+      .then(() => {
+        likeButton.classList.toggle("card__like-button_is-active");
+      })
+      .catch((response) => {
+        console.log(`Ошибка: ${response.status}`);
+      });
   } else {
-    addLike(cardData._id).then((data) => {
-      cardElement.querySelector(".card__like-counter").textContent =
-        data.likes.length;
-    }).then(()=>{
-      likeButton.classList.toggle("card__like-button_is-active");
-    }).catch((response)=>{
-      console.log(`Ошибка: ${response.status}`)
-    });    
+    addLike(cardData._id)
+      .then((data) => {
+        cardElement.querySelector(".card__like-counter").textContent =
+          data.likes.length;
+      })
+      .then(() => {
+        likeButton.classList.toggle("card__like-button_is-active");
+      })
+      .catch((response) => {
+        console.log(`Ошибка: ${response.status}`);
+      });
   }
 }
