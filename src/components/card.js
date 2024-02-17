@@ -40,13 +40,17 @@ export function likeCard(likeButton, cardData, cardElement, userId) {
     deleteLike(cardData._id).then((data) => {
       cardElement.querySelector(".card__like-counter").textContent =
         data.likes.length;
+    }).then(()=>{
+      likeButton.classList.toggle("card__like-button_is-active");
     });
-    likeButton.classList.toggle("card__like-button_is-active");
+    
   } else {
     addLike(cardData._id).then((data) => {
       cardElement.querySelector(".card__like-counter").textContent =
         data.likes.length;
+    }).then(()=>{
+      likeButton.classList.toggle("card__like-button_is-active");
     });
-    likeButton.classList.toggle("card__like-button_is-active");
+    
   }
 }
