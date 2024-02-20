@@ -142,6 +142,9 @@ formEditAvatar.addEventListener("submit", (e) => {
     .then(() => {
       profileImage.setAttribute("style", `background-image: url(${link});`);
     })
+    .catch((error) => {
+      console.log(error);
+    })
     .finally(() => {
       renderLoading(false, saveButton);
     });
