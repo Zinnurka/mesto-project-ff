@@ -138,10 +138,9 @@ formEditAvatar.addEventListener("submit", (e) => {
   const saveButton = formEditAvatar.querySelector(".popup__button");
   renderLoading(true, saveButton);
   const link = formEditAvatar.elements["url"].value;
-  console.log(link);
   editAvatar({ avatar: link })
     .then(() => {
-      location.reload();
+      profileImage.setAttribute("style", `background-image: url(${link});`);
     })
     .finally(() => {
       renderLoading(false, saveButton);
