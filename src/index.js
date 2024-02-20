@@ -2,14 +2,14 @@ import "./pages/index.css";
 import { openModal, closeModal, getFormByName } from "./components/modal.js";
 import { createCard, likeCard } from "./components/card.js";
 import "./components/validator.js";
-import { clearValidation } from "./components/validator.js";
+import { clearValidation, config } from "./components/validator.js";
 import {
   getUserData,
   getCards,
   editUserData,
   addCard,
   deleteCard,
-  editAvatar
+  editAvatar,
 } from "./components/api.js";
 
 const cardsContainer = document.querySelector(".places__list");
@@ -17,132 +17,151 @@ const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileImage = document.querySelector(".profile__image");
 
-const profileEditButton = document.querySelector(".profile__edit-button");
-const addNewCardButton = document.querySelector(".profile__add-button");
-const modalCloseButtons = document.querySelectorAll(".popup__close");
-const avatarEditButton = document.querySelector(".profile__image")
+const buttonProfileEdit = document.querySelector(".profile__edit-button");
+const buttonAddNewCard = document.querySelector(".profile__add-button");
+const buttonsModalClose = document.querySelectorAll(".popup__close");
+const buttonAvatarEdit = document.querySelector(".profile__image");
 
 const modalEditProfile = document.querySelector(".popup_type_edit");
 const modalCreateNewCard = document.querySelector(".popup_type_new-card");
 const modalImagePreview = document.querySelector(".popup_type_image");
-const modalEditAvatar = document.querySelector(".popup_type_edit-avatar")
+const modalEditAvatar = document.querySelector(".popup_type_edit-avatar");
 
-const editProfileForm = getFormByName("edit-profile");
-const addNewCardForm = getFormByName("new-place");
-const editAvatarForm = getFormByName("edit-avatar")
+const popupImage = modalImagePreview.querySelector(".popup__image");
+const popupCaption = modalImagePreview.querySelector(".popup__caption");
 
-Promise.all([getUserData, getCards])
-  .then(([getUserData, getCards]) => {
-    getUserData()
-      .then((data) => {
-        profileTitle.textContent = data.name;
-        profileDescription.textContent = data.about;
-        profileImage.setAttribute(
-          "style",
-          `background-image: url(${data.avatar});`
-        );
-        console.log(data._id);
-        return data._id;
-      })
-      .then((userID) => {
-        getCards().then((data) => {
-          data.forEach(function (cardData) {
-            const card = createCard(
-              cardData,
-              userID,
-              deleteCard,
-              likeCard,
-              previewImage
-            );
-            cardsContainer.append(card);
-          });
-        });
-      });
+const formEditProfile = getFormByName("edit-profile");
+const formAddNewCard = getFormByName("new-place");
+const formEditAvatar = getFormByName("edit-avatar");
+
+Promise.all([getUserData(), getCards()])
+  .then((data) => {
+    const userData = data[0];
+    const cards = data[1];
+    cards.forEach(function (cardData) {
+      const card = createCard(
+        cardData,
+        deleteCard,
+        userData._id,
+        likeCard,
+        previewImage
+      );
+      cardsContainer.append(card);
+    });
+    profileTitle.textContent = userData.name;
+    profileDescription.textContent = userData.about;
+    profileImage.setAttribute(
+      "style",
+      `background-image: url(${userData.avatar});`
+    );
   })
   .catch((error) => {
     console.log(error);
   });
 
-profileEditButton.addEventListener("click", () => {
-  clearValidation(editProfileForm);
-  editProfileForm.elements.name.value = profileTitle.textContent;
-  editProfileForm.elements.description.value = profileDescription.textContent;
+buttonProfileEdit.addEventListener("click", () => {
+  clearValidation(formEditProfile, config);
+  formEditProfile.elements.name.value = profileTitle.textContent;
+  formEditProfile.elements.description.value = profileDescription.textContent;
   openModal(modalEditProfile);
 });
 
-avatarEditButton.addEventListener("click", ()=> {
-  clearValidation(editAvatarForm);
-  openModal(modalEditAvatar)
-})
+buttonAvatarEdit.addEventListener("click", () => {
+  clearValidation(formEditAvatar, config);
+  openModal(modalEditAvatar);
+});
 
-modalCloseButtons.forEach((closeButton) => {
+buttonsModalClose.forEach((closeButton) => {
   const closeButtonPopup = closeButton.closest(".popup");
   closeButton.addEventListener("click", () => {
     closeModal(closeButtonPopup);
   });
 });
 
-addNewCardButton.addEventListener("click", () => {
-  clearValidation(addNewCardForm);
+buttonAddNewCard.addEventListener("click", () => {
+  clearValidation(formAddNewCard, config);
   openModal(modalCreateNewCard);
 });
 
-editProfileForm.addEventListener("submit", (e) => {
+formEditProfile.addEventListener("submit", (e) => {
   e.preventDefault();
-  const saveButton = editProfileForm.querySelector(".popup__button")
-  renderLoading(true, saveButton)
-  const name = editProfileForm.elements.name.value;
-  const description = editProfileForm.elements.description.value;
+  const saveButton = formEditProfile.querySelector(".popup__button");
+  renderLoading(true, saveButton);
+  const name = formEditProfile.elements.name.value;
+  const description = formEditProfile.elements.description.value;
   editUserData({
     name: name,
     about: description,
-  }).then(() => {
-    getUserData().then((data) => {
-      profileTitle.textContent = data.name;
-      profileDescription.textContent = data.about;
-    }).finally(()=>{
-      renderLoading(false, saveButton)
+  })
+    .then(() => {
+      profileTitle.textContent = name;
+      profileDescription.textContent = description;
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+      renderLoading(false, saveButton);
     });
-  });
 });
 
-addNewCardForm.addEventListener("submit", (e) => {
+formAddNewCard.addEventListener("submit", (e) => {
   e.preventDefault();
-  const saveButton = addNewCardForm.querySelector(".popup__button")
-  renderLoading(true, saveButton)
-  const placeName = addNewCardForm.elements["place-name"].value;
-  const link = addNewCardForm.elements["link"].value;
+  const saveButton = formAddNewCard.querySelector(".popup__button");
+  renderLoading(true, saveButton);
+  const placeName = formAddNewCard.elements["place-name"].value;
+  const link = formAddNewCard.elements["link"].value;
   const cardData = { name: placeName, link: link };
-  addCard(cardData);
-  cardsContainer.prepend(createCard(cardData, deleteCard));
-  renderLoading(false, saveButton);
-  closeModal(modalCreateNewCard);
-  addNewCardForm.reset();
+  addCard(cardData)
+    .then((response) => {
+      cardsContainer.prepend(
+        createCard(
+          response,
+          deleteCard,
+          response.owner._id,
+          likeCard,
+          previewImage
+        )
+      );
+      closeModal(modalCreateNewCard);
+      formAddNewCard.reset();
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+      renderLoading(false, saveButton);
+    });
 });
 
 function previewImage(e) {
-  modalImagePreview.querySelector(".popup__image").src = e.target.src;
-  modalImagePreview.querySelector(".popup__image").alt = e.target.alt;
-  modalImagePreview.querySelector(".popup__caption").textContent = e.target.alt;
+  popupImage.src = e.target.src;
+  popupImage.alt = e.target.alt;
+  popupCaption.textContent = e.target.alt;
   openModal(modalImagePreview);
 }
 
-editAvatarForm.addEventListener("submit", (e)=>{
+formEditAvatar.addEventListener("submit", (e) => {
   e.preventDefault();
-  const saveButton = editAvatarForm.querySelector(".popup__button")
-  renderLoading(true, saveButton)
-  const link = editAvatarForm.elements["url"].value;
-  console.log(link)
-  editAvatar({'avatar':link}).then(()=>{
-    renderLoading(false, saveButton);
-    location.reload()
-  })
-})
+  const saveButton = formEditAvatar.querySelector(".popup__button");
+  renderLoading(true, saveButton);
+  const link = formEditAvatar.elements["url"].value;
+  editAvatar({ avatar: link })
+    .then(() => {
+      profileImage.setAttribute("style", `background-image: url(${link});`);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+      renderLoading(false, saveButton);
+    });
+});
 
-function renderLoading(isLoading, buttonElement){
-  if (isLoading){
-    buttonElement.textContent = 'Сохранение...'
+function renderLoading(isLoading, buttonElement) {
+  if (isLoading) {
+    buttonElement.textContent = "Сохранение...";
   } else {
-    buttonElement.textContent = 'Сохранить'
+    buttonElement.textContent = "Сохранить";
   }
 }
