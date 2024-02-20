@@ -89,16 +89,14 @@ formEditProfile.addEventListener("submit", (e) => {
   editUserData({
     name: name,
     about: description,
-  }).then(() => {
-    getUserData()
-      .then((data) => {
-        profileTitle.textContent = data.name;
-        profileDescription.textContent = data.about;
-      })
-      .finally(() => {
-        renderLoading(false, saveButton);
-      });
-  });
+  })
+    .then(() => {
+      profileTitle.textContent = name;
+      profileDescription.textContent = description;
+    })
+    .finally(() => {
+      renderLoading(false, saveButton);
+    });
 });
 
 formAddNewCard.addEventListener("submit", (e) => {
