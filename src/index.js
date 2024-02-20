@@ -94,6 +94,9 @@ formEditProfile.addEventListener("submit", (e) => {
       profileTitle.textContent = name;
       profileDescription.textContent = description;
     })
+    .catch((error) => {
+      console.log(error);
+    })
     .finally(() => {
       renderLoading(false, saveButton);
     });
