@@ -27,6 +27,9 @@ const modalCreateNewCard = document.querySelector(".popup_type_new-card");
 const modalImagePreview = document.querySelector(".popup_type_image");
 const modalEditAvatar = document.querySelector(".popup_type_edit-avatar");
 
+const popupImage = modalImagePreview.querySelector(".popup__image");
+const popupCaption = modalImagePreview.querySelector(".popup__caption");
+
 const formEditProfile = getFormByName("edit-profile");
 const formAddNewCard = getFormByName("new-place");
 const formEditAvatar = getFormByName("edit-avatar");
@@ -124,9 +127,9 @@ formAddNewCard.addEventListener("submit", (e) => {
 });
 
 function previewImage(e) {
-  modalImagePreview.querySelector(".popup__image").src = e.target.src;
-  modalImagePreview.querySelector(".popup__image").alt = e.target.alt;
-  modalImagePreview.querySelector(".popup__caption").textContent = e.target.alt;
+  popupImage.src = e.target.src;
+  popupImage.alt = e.target.alt;
+  popupCaption.textContent = e.target.alt;
   openModal(modalImagePreview);
 }
 
