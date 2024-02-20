@@ -139,10 +139,13 @@ formEditAvatar.addEventListener("submit", (e) => {
   renderLoading(true, saveButton);
   const link = formEditAvatar.elements["url"].value;
   console.log(link);
-  editAvatar({ avatar: link }).then(() => {
-    renderLoading(false, saveButton);
-    location.reload();
-  });
+  editAvatar({ avatar: link })
+    .then(() => {
+      location.reload();
+    })
+    .finally(() => {
+      renderLoading(false, saveButton);
+    });
 });
 
 function renderLoading(isLoading, buttonElement) {
