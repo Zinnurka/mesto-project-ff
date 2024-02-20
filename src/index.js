@@ -41,8 +41,8 @@ Promise.all([getUserData(), getCards()])
     cards.forEach(function (cardData) {
       const card = createCard(
         cardData,
-        userData._id,
         deleteCard,
+        userData._id,
         likeCard,
         previewImage
       );
@@ -113,8 +113,16 @@ formAddNewCard.addEventListener("submit", (e) => {
   const link = formAddNewCard.elements["link"].value;
   const cardData = { name: placeName, link: link };
   addCard(cardData)
-    .then(() => {
-      cardsContainer.prepend(createCard(cardData, deleteCard));
+    .then((response) => {
+      cardsContainer.prepend(
+        createCard(
+          response,
+          deleteCard,
+          response.owner._id,
+          likeCard,
+          previewImage
+        )
+      );
       closeModal(modalCreateNewCard);
       formAddNewCard.reset();
     })
