@@ -52,6 +52,7 @@ function setEventListeners(formElement, settings) {
     formElement.querySelectorAll(settings.formInput)
   );
   toggleButtonState(
+    formElement,
     inputList,
     settings.buttonElement,
     settings.popupButtonSubmitInactive
@@ -60,6 +61,7 @@ function setEventListeners(formElement, settings) {
     inputElement.addEventListener("input", () => {
       isValid(formElement, inputElement, settings);
       toggleButtonState(
+        formElement,
         inputList,
         settings.buttonElement,
         settings.popupButtonSubmitInactive
@@ -82,8 +84,13 @@ function hasInvalidInput(inputList) {
   });
 }
 
-function toggleButtonState(inputList, buttonElement, submitButtonClass) {
-  buttonElement = document.querySelector(buttonElement);
+function toggleButtonState(
+  formElement,
+  inputList,
+  buttonElement,
+  submitButtonClass
+) {
+  buttonElement = formElement.querySelector(buttonElement);
   if (hasInvalidInput(inputList)) {
     buttonElement.disabled = true;
     buttonElement.classList.add(submitButtonClass);
@@ -94,7 +101,7 @@ function toggleButtonState(inputList, buttonElement, submitButtonClass) {
 }
 
 export function clearValidation(formElement, settings) {
-  const buttonElement = document.querySelector(settings.buttonElement);
+  const buttonElement = formElement.querySelector(settings.buttonElement);
   const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
   inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement);
