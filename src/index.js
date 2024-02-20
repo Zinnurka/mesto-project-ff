@@ -17,19 +17,19 @@ const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileImage = document.querySelector(".profile__image");
 
-const profileEditButton = document.querySelector(".profile__edit-button");
-const addNewCardButton = document.querySelector(".profile__add-button");
-const modalCloseButtons = document.querySelectorAll(".popup__close");
-const avatarEditButton = document.querySelector(".profile__image")
+const buttonProfileEdit = document.querySelector(".profile__edit-button");
+const buttonAddNewCard = document.querySelector(".profile__add-button");
+const buttonsModalClose = document.querySelectorAll(".popup__close");
+const buttonAvatarEdit = document.querySelector(".profile__image")
 
 const modalEditProfile = document.querySelector(".popup_type_edit");
 const modalCreateNewCard = document.querySelector(".popup_type_new-card");
 const modalImagePreview = document.querySelector(".popup_type_image");
 const modalEditAvatar = document.querySelector(".popup_type_edit-avatar")
 
-const editProfileForm = getFormByName("edit-profile");
-const addNewCardForm = getFormByName("new-place");
-const editAvatarForm = getFormByName("edit-avatar")
+const formEditProfile = getFormByName("edit-profile");
+const formAddNewCard = getFormByName("new-place");
+const formEditAvatar = getFormByName("edit-avatar")
 
 Promise.all([getUserData, getCards])
   .then(([getUserData, getCards]) => {
@@ -63,36 +63,36 @@ Promise.all([getUserData, getCards])
     console.log(error);
   });
 
-profileEditButton.addEventListener("click", () => {
-  clearValidation(editProfileForm, config);
-  editProfileForm.elements.name.value = profileTitle.textContent;
-  editProfileForm.elements.description.value = profileDescription.textContent;
+buttonProfileEdit.addEventListener("click", () => {
+  clearValidation(formEditProfile, config);
+  formEditProfile.elements.name.value = profileTitle.textContent;
+  formEditProfile.elements.description.value = profileDescription.textContent;
   openModal(modalEditProfile);
 });
 
-avatarEditButton.addEventListener("click", ()=> {
-  clearValidation(editAvatarForm, config);
+buttonAvatarEdit.addEventListener("click", ()=> {
+  clearValidation(formEditAvatar, config);
   openModal(modalEditAvatar)
 })
 
-modalCloseButtons.forEach((closeButton) => {
+buttonsModalClose.forEach((closeButton) => {
   const closeButtonPopup = closeButton.closest(".popup");
   closeButton.addEventListener("click", () => {
     closeModal(closeButtonPopup);
   });
 });
 
-addNewCardButton.addEventListener("click", () => {
-  clearValidation(addNewCardForm, config);
+buttonAddNewCard.addEventListener("click", () => {
+  clearValidation(formAddNewCard, config);
   openModal(modalCreateNewCard);
 });
 
-editProfileForm.addEventListener("submit", (e) => {
+formEditProfile.addEventListener("submit", (e) => {
   e.preventDefault();
-  const saveButton = editProfileForm.querySelector(".popup__button")
+  const saveButton = formEditProfile.querySelector(".popup__button")
   renderLoading(true, saveButton)
-  const name = editProfileForm.elements.name.value;
-  const description = editProfileForm.elements.description.value;
+  const name = formEditProfile.elements.name.value;
+  const description = formEditProfile.elements.description.value;
   editUserData({
     name: name,
     about: description,
@@ -106,18 +106,18 @@ editProfileForm.addEventListener("submit", (e) => {
   });
 });
 
-addNewCardForm.addEventListener("submit", (e) => {
+formAddNewCard.addEventListener("submit", (e) => {
   e.preventDefault();
-  const saveButton = addNewCardForm.querySelector(".popup__button")
+  const saveButton = formAddNewCard.querySelector(".popup__button")
   renderLoading(true, saveButton)
-  const placeName = addNewCardForm.elements["place-name"].value;
-  const link = addNewCardForm.elements["link"].value;
+  const placeName = formAddNewCard.elements["place-name"].value;
+  const link = formAddNewCard.elements["link"].value;
   const cardData = { name: placeName, link: link };
   addCard(cardData);
   cardsContainer.prepend(createCard(cardData, deleteCard));
   renderLoading(false, saveButton);
   closeModal(modalCreateNewCard);
-  addNewCardForm.reset();
+  formAddNewCard.reset();
 });
 
 function previewImage(e) {
@@ -127,11 +127,11 @@ function previewImage(e) {
   openModal(modalImagePreview);
 }
 
-editAvatarForm.addEventListener("submit", (e)=>{
+formEditAvatar.addEventListener("submit", (e)=>{
   e.preventDefault();
-  const saveButton = editAvatarForm.querySelector(".popup__button")
+  const saveButton = formEditAvatar.querySelector(".popup__button")
   renderLoading(true, saveButton)
-  const link = editAvatarForm.elements["url"].value;
+  const link = formEditAvatar.elements["url"].value;
   console.log(link)
   editAvatar({'avatar':link}).then(()=>{
     renderLoading(false, saveButton);
