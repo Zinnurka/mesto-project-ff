@@ -109,11 +109,18 @@ formAddNewCard.addEventListener("submit", (e) => {
   const placeName = formAddNewCard.elements["place-name"].value;
   const link = formAddNewCard.elements["link"].value;
   const cardData = { name: placeName, link: link };
-  addCard(cardData);
-  cardsContainer.prepend(createCard(cardData, deleteCard));
-  renderLoading(false, saveButton);
-  closeModal(modalCreateNewCard);
-  formAddNewCard.reset();
+  addCard(cardData)
+    .then(() => {
+      cardsContainer.prepend(createCard(cardData, deleteCard));
+      closeModal(modalCreateNewCard);
+      formAddNewCard.reset();
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+      renderLoading(false, saveButton);
+    });
 });
 
 function previewImage(e) {
