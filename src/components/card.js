@@ -15,9 +15,13 @@ export function createCard(cardData, deleteCard, userId, likeCard, openCard) {
   cardElement.querySelector(".card__like-counter").textContent =
     cardData.likes?.length;
   deleteButton.addEventListener("click", function (event) {
-    deleteCard(cardData._id).then(() => {
-      hideCard(event.target.closest(".card"));
-    });
+    deleteCard(cardData._id)
+      .then(() => {
+        hideCard(event.target.closest(".card"));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   });
   const likeButton = cardElement.querySelector(".card__like-button");
   if (cardData.likes?.find((like) => like._id === userId)) {
