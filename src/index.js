@@ -96,6 +96,7 @@ formEditProfile.addEventListener("submit", (e) => {
     .then(() => {
       profileTitle.textContent = name;
       profileDescription.textContent = description;
+      closeModal(modalEditProfile)
     })
     .catch((error) => {
       console.log(error);
@@ -149,6 +150,7 @@ formEditAvatar.addEventListener("submit", (e) => {
   editAvatar({ avatar: link })
     .then(() => {
       profileImage.setAttribute("style", `background-image: url(${link});`);
+      closeModal(modalEditAvatar)
     })
     .catch((error) => {
       console.log(error);
