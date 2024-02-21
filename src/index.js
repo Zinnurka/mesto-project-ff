@@ -72,9 +72,9 @@ buttonAvatarEdit.addEventListener("click", () => {
 });
 
 buttonsModalClose.forEach((closeButton) => {
-  const closeButtonPopup = closeButton.closest(".popup");
+  const buttonClosePopup = closeButton.closest(".popup");
   closeButton.addEventListener("click", () => {
-    closeModal(closeButtonPopup);
+    closeModal(buttonClosePopup);
   });
 });
 
